@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito - KED Online</title>
+
+  <link rel="stylesheet" href="diseño.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <img src="img/logo.png" alt="KED Logo" class="logo">
+
+    <nav>
+      <ul>
+        <li><a href="KedIndex.html">Inicio</a></li>
+        <li><a href="#">Tienda</a></li>
+        <li><a href="carrito.html" class="active">Carrito</a></li>
+        <li><a href="#">Nosotros</a></li>
+        <li><a href="#">Sucursales</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <div class="icons">
+      <i class="fas fa-search"></i>
+      <div class="cart-container">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- SECCIÓN CARRITO -->
+  <main class="productos">
+    <h2>TU CARRITO</h2>
+
+    <div id="cart-items" class="grid-productos"></div>
+
+    <div id="cart-summary" style="margin-top: 2rem; text-align: center;">
+      <h3>Total: <span id="cart-total">$0.00</span></h3>
+      <button id="clear-cart" style="padding: 0.6rem 1.2rem; background-color: #ff4d4d; color: white; border: none; border-radius: 6px; cursor: pointer;">Vaciar carrito</button>
+    </div>
+  </main>
+
+  <script>
+  // Obtener carrito desde localStorage
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartCount = document.getElementById("cart-count");
+  const cartItems = document.getElementById("cart-items");
+  const cartTotal = document.getElementById("cart-total");
+
+  // Actualiza contador de carrito
+  function updateCartCount() {
+    cartCount.textContent = cart.length;
+  }
+
+  // Renderiza los productos del carrito
+  function renderCart() {
+    cartItems.innerHTML = "";
+
+    if (cart.length === 0) {
+      cartItems.innerHTML = "<p style='text-align:center;'>Tu carrito está vacío 🛒</p>";
+      cartTotal.textContent = "$0.00";
+      updateCartCount();
+      return;
+    }
+
+    let total = 0;
+    cart.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.classList.add("producto");
+      div.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" style="height:250px; object-fit:cover; border-radius:6px;">
+        <h3>${item.name}</h3>
+        <p class="precio">${item.price}</p>
+        <i class="fas fa-trash cart-icon" data-index="${index}" title="Eliminar"></i>
+      `;
+      cartItems.appendChild(div);
+
+      total += parseFloat(item.price.replace("$", ""));
+    });
+
+    cartTotal.textContent = `$${total.toFixed(2)}`;
+    updateCartCount();
+  }
+
+  // Eliminar un producto
+  cartItems.addEventListener("click", e => {
+    if (e.target.classList.contains("fa-trash")) {
+      const index = e.target.getAttribute("data-index");
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+  });
+
+  // Vaciar carrito
+  document.getElementById("clear-cart").addEventListener("click", () => {
+    if (confirm("¿Deseas vaciar el carrito?")) {
+      cart = [];
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+  });
+
+  renderCart();
+</script>
+
+
+</body>
+</html>
