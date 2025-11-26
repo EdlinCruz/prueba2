@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KED Online - Productos Nuevos</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="diseño.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+   <!--<script src="https://kit.fontawesome.com/a2d9d6df86.js" crossorigin="anonymous"></script>--> 
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+       <img src="img/logo.png" alt="KED Logo" class="logo">
+
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Inicio</a></li>
+                <li><a href="#">Tienda</a></li>
+                <li><a href="#">Carrito</a></li>
+                <li><a href="#">Nosotros</a></li>
+                <li><a href="#">Sucursales</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+       <!--<div class="icons">
+            <i class="fas fa-search"></i>
+            <i class="fas fa-shopping-cart"></i>
+        </div>--> 
+        
+        <div class="icons">
+            <i class="fas fa-search"></i>
+            <div class="cart-container">
+                <i class="fas fa-shopping-cart" id="open-cart"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- SECCIÓN PRODUCTOS -->
+    <main class="productos">
+        <h2>PRODUCTOS NUEVOS</h2>
+
+        <div class="grid-productos">
+            <div class="producto">
+                <img src="img/bw-edition.png" alt="B&W Edition">
+                <h3>B&W Edition</h3>
+                <p class="precio">$150.00</p>
+                <i class="fas fa-shopping-cart cart-icon"></i>
+            </div>
+
+            <div class="producto">
+                <img src="img/tshirt-white.png" alt="T-Shirt White">
+                <h3>T-Shirt White</h3>
+                <p class="precio">$250.00</p>
+                <i class="fas fa-shopping-cart cart-icon"></i>
+            </div>
+
+            <div class="producto">
+                <img src="img/moba-hoodie.png" alt="MOBA Hoodie">
+                <h3>MOBA Hoodie</h3>
+                <p class="precio">$690.00</p>
+                <i class="fas fa-shopping-cart cart-icon"></i>
+            </div>
+
+            <div class="producto">
+                <img src="img/only-god-tshirt.png" alt="Only God T-shirt">
+                <h3>Only God T-shirt</h3>
+                <p class="precio">$470.00</p>
+                <i class="fas fa-shopping-cart cart-icon"></i>
+            </div>
+
+            <div class="producto">
+                <img src="img/bad-choices.png" alt="Pretty at Bad Choices">
+                <h3>Pretty at Bad Choices</h3>
+                <p class="precio">$300.00</p>
+                <i class="fas fa-shopping-cart cart-icon"></i>
+            </div>
+
+            <div class="producto">
+                <img src="img/moba-studio.png" alt="MOBA Studio">
+                <h3>MOBA Studio</h3>
+                <p class="precio">$400.00</p>
+                <i class="fas fa-shopping-cart cart-icon"></i>
+            </div>
+
+            <div class="producto">
+                <img src="img/gods-plan.png" alt="God's Plan">
+                <h3>God's Plan</h3>
+                <p class="precio">$380.00</p>
+                <i class="fas fa-shopping-cart cart-icon"></i>
+            </div>
+
+            <div class="producto">
+                <img src="img/from-death.png" alt="From Death to Life">
+                <h3>From Death to Life</h3>
+                <p class="precio">$450.00</p>
+                <i class="fas fa-shopping-cart cart-icon"></i>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Registrar el Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                .then(reg => console.log('Service Worker registrado:', reg.scope))
+                .catch(err => console.log('Error al registrar el Service Worker:', err));
+            });
+        }
+    </script>
+   <!-- <script>
+  // Recuperar carrito guardado (si existe)
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartCount = document.getElementById("cart-count");
+
+  // Actualizar contador
+  function updateCartCount() {
+    cartCount.textContent = cart.length;
+  }
+
+  // Guardar carrito en localStorage
+  function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
+  // Agregar producto al carrito
+  function addToCart(productName, price) {
+    cart.push({ name: productName, price: price });
+    saveCart();
+    updateCartCount();
+  }
+
+  // Escuchar clics en íconos de carrito de producto
+  document.querySelectorAll(".cart-icon").forEach(icon => {
+    icon.addEventListener("click", e => {
+      const producto = e.target.closest(".producto");
+      const name = producto.querySelector("h3").textContent;
+      const price = producto.querySelector(".precio").textContent;
+      addToCart(name, price);
+      alert(`${name} agregado al carrito 🛒`);
+    });
+  });
+
+  // Mostrar cantidad al cargar
+  updateCartCount();
+</script>-->
+
+<script>
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartCount = document.getElementById("cart-count");
+
+  function updateCartCount() {
+    cartCount.textContent = cart.length;
+  }
+
+  function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
+  function addToCart(productName, price, image) {
+    cart.push({ name: productName, price: price, image: image });
+    saveCart();
+    updateCartCount();
+  }
+
+  document.querySelectorAll(".cart-icon").forEach(icon => {
+    icon.addEventListener("click", e => {
+      const producto = e.target.closest(".producto");
+      const name = producto.querySelector("h3").textContent;
+      const price = producto.querySelector(".precio").textContent;
+      const image = producto.querySelector("img").getAttribute("src");
+      addToCart(name, price, image);
+      alert(`${name} agregado al carrito 🛒`);
+    });
+  });
+
+  updateCartCount();
+</script>
+<script>
+  // Redirigir al carrito cuando se haga clic en el ícono superior
+  document.getElementById("open-cart").addEventListener("click", () => {
+    window.location.href = "carrito.html";
+  });
+</script>
+    
+
+</body>
+</html>
